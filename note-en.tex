@@ -1,0 +1,155 @@
+%%
+%% In this note, we explain how to generate the low data in our paper
+%% ``Holonomic gradient method for distribution function of 
+%%   a weighted sum of noncentral chi-square random variables''
+%%
+%% To compile this TeX file, simply type the following command:
+%%     latex note-en.tex && latex note-en.tex
+%%
+
+\iffalse
+%\iftrue
+
+\documentclass{article}
+
+\else 
+
+\documentclass[12pt]{article}
+
+\textwidth 155 true mm
+\textheight 247 truemm
+\topmargin -0.4 true mm
+\headheight 0 true mm
+\headsep 0 true mm
+\oddsidemargin 2.1 true mm
+\evensidemargin 2.1 true mm
+\footskip 5 true mm
+%\titlesep 12pt
+
+\fi
+
+%\pagestyle{empty}
+
+\usepackage{color}
+%\usepackage{refcheck}
+\usepackage{url}
+%\usepackage{amssymb}
+%\usepackage{amsmath}
+%\usepackage{graphicx}
+\usepackage{listings}
+
+%\usepackage{amsthm}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{proposition}{Proposition}
+%\newtheorem{lemma}{Lemma}
+%\newtheorem{corollary}{Corollary}
+%\newtheorem{conjecture}{Conjecture}
+%\newtheorem{algorithm}{Algorithm}
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}
+%\newtheorem{example}{Example}
+
+%% for shell script
+\lstdefinestyle{BashInputStyle}{
+  language=bash,
+  firstline=2,% Supress the first line that begins with `%`
+  basicstyle=\small\sffamily,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{white},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth
+}
+
+\def\pd#1{\partial_{#1}}
+
+\title{A Note for Numerical Experiments}
+\author{Tamio Koyama}
+\date{March 16, 2015}
+
+\begin{document}
+\maketitle
+%\thispagestyle{empty}
+
+\begin{abstract}
+In this note, we explain how to generate the low data in our paper
+\cite{koyama-takemura2}.
+%,T.~Koyama, A.~Takemura, 
+%``Holonomic gradient method for distribution function of 
+%a weighted sum of noncentral chi-square random variables'',
+%\url{http://arxiv.org/abs/1503.00378}.
+\end{abstract}
+
+\section{Preparation}
+For our numerical experiments, we prepared C program {\tt program.c}, 
+shell scripts {\tt tab1and2.sh}, {\tt tab3.sh},
+and {\tt R} scripts {\tt fig1.R}, {\tt fig2.R}, {\tt tab1and2.R}, {\tt tab3.R}.
+Our computer system is linux(debian), and we utilized GNU scientific library
+BLAS, and {\tt R}.
+The source file {\tt program.c} can be compiled by the following command:
+\begin{lstlisting}[style=BashInputStyle]
+
+gcc program.c -lm -lgsl -lblas -O0 -Wall 
+\end{lstlisting}
+
+ 
+In our numerical experiments, we generated the following files:
+{\tt fig1.txt}, {\tt fig1.eps},
+{\tt fig2.txt}, {\tt fig2-1.eps},{\tt fig2-2.eps},
+{\tt tab1and2.txt},{\tt tab1and2.tex},
+{\tt tab3.txt},{\tt tab3.tex},{\tt tab3.eps}.
+
+\section{How to Generate Low Data}
+%In this section, we explain how to generate Figure 1 in \cite{koyama-takemura2}.
+\noindent{\bf Figure 1}\/.
+The following command generates the low data {\tt fig1.txt}
+and eps file {\tt fig1.eps} for figure 1:
+\begin{lstlisting}[style=BashInputStyle]
+
+./a.out 2 3 20.0 3.0 2.0 1.0 0.01 0.02 0.03 > fig1.txt
+R -f fig1.R
+\end{lstlisting}
+
+\medskip\noindent{\bf Figure 2}\/.
+The following command generates the low data {\tt fig2.txt}
+and eps files {\tt fig2-1.eps} and {\tt fig2-2.eps} for figure 2:
+\begin{lstlisting}[style=BashInputStyle]
+
+./a.out 11 3 20.0 3.0 2.0 1.0 0.01 0.02 0.03 > fig2.txt
+R -f fig2.R
+\end{lstlisting}
+
+\medskip\noindent{\bf Table 1 and Table 2}\/.
+Run the shell script {\tt tab1and2.sh}, then the low data {\tt tab1and2.txt} and 
+the \TeX file {\tt tab1and2.tex} are generated.
+
+\medskip\noindent{\bf Table 3 and its figure}\/.
+Run the shell script {\tt tab3.sh}, then the low data {\tt tab3.txt}, 
+the TeX source {\tt tab3.tex}, and the eps file {\tt tab3.eps} are generated.
+
+
+%\iffalse
+\iftrue
+
+\begin{thebibliography}{1}
+
+\bibitem{koyama-takemura2}
+T.~Koyama and A.~Takemura.
+\newblock Holonomic gradient method for distribution function of a weighted sum
+  of noncentral chi-square random variables.
+\newblock \url{http://arxiv.org/abs/1503.00378}, 2015.
+
+\end{thebibliography}
+
+\else
+
+\bibliographystyle{plain}
+\bibliography{reference}
+
+\fi
+
+%\appendix
+\end{document}

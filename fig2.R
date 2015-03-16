@@ -1,0 +1,28 @@
+fig2 <- function(){
+     x <- read.table("fig2.txt")
+     postscript(file="./fig2-1.eps",width=5,height=5,horizontal=FALSE,onefile=FALSE,paper="special",family="Helvetica")
+     plot(x$V1, x$V2, xlab="r", ylab="(Fisher-Bingham Integral)/(Laprace Approximation)")
+     dev.off()
+
+     postscript(file="./fig2-2.eps",width=5,height=5,horizontal=FALSE,onefile=FALSE,paper="special",family="Helvetica")
+     par(new=F)
+     plot(x$V1, x$V3, ylim=c(0.0,1.5), xlab="r", ylab="(Differantial of FB)/(Laprace Approximation)", col=1)
+     par(new=T)
+     plot(x$V1, x$V4, ylim=c(0.0,1.5), xlab="", ylab="", col=2, xaxt="n", yaxt="n")
+     par(new=T)
+     plot(x$V1, x$V5, ylim=c(0.0,1.5), xlab="", ylab="", col=3, xaxt="n", yaxt="n")
+     par(new=T)
+     plot(x$V1, x$V6, ylim=c(0.0,1.5), xlab="", ylab="", col=1, pch=2, xaxt="n", yaxt="n")
+     par(new=T)
+     plot(x$V1, x$V7, ylim=c(0.0,1.5), xlab="", ylab="", col=2, pch=2, xaxt="n", yaxt="n")
+     par(new=T)
+     plot(x$V1, x$V8, ylim=c(0.0,1.5), xlab="", ylab="", col=3, pch=2, xaxt="n", yaxt="n")
+     labels <- c("df/d\\tau_1","df/d\\tau_2","df/d\\tau_3","df/d\\lambda_1","df/d\\lambda_2","df/d\\lambda_3")
+     cols <-   c("black","red","green","black","red","green")
+     pchs <-   c(1,1,1,2,2,2)
+     ltys <-   c(1,1,1,1,1,1)
+     legend("bottomright", legend = labels, col = cols, pch = pchs)
+     dev.off()
+}
+
+fig2()
