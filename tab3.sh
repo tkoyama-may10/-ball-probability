@@ -10,6 +10,6 @@ do
 done
 
 
-cat tab3.txt | grep Probability > tmp
+cat tab3.txt | grep p-1 > tmp
 cat tab3.txt | grep User > tmp2
 R -f tab3.R

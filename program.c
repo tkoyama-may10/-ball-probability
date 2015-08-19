@@ -14,6 +14,7 @@ static double r1=20.0; /* r1=20.0 or 1000.0 */
 static double Log_C;
 
 static void ball_prob(void);
+static void ball_prob2(void);
 static void ball_prob_graph(void);
 static void fisher_bingham(void);
 static void fisher_bingham_graph(void);
@@ -103,6 +104,77 @@ ball_prob(void)
   //fprintf(stdout, "r=%f\n", r);
   //print_vector(stdout, f, rank, "f:\t");
   fprintf(stdout, "Probability= %10.6f\n", f[rank-1]);
+
+  return;
+}
+
+static void 
+ball_prob2(void)
+{
+  /* Set parameters */
+  rank = 2 * dim + 1;
+  int i;
+  for ( i = 0; i < dim; i++){
+    ss[i] = s[i] * s[i];
+    mm[i] = m[i] * m[i];
+    x[i] = -0.5 / (s[i]*s[i]);
+    y[i] = m[i] / (s[i]*s[i]);    
+  }
+  /*
+    print_vector(stdout, s, dim, "  sigma:");
+    print_vector(stdout, m, dim, "     mu:");
+    print_vector(stdout, x, dim, "      x:");
+    print_vector(stdout, y, dim, "      y:");
+  */
+
+  /* initial value */
+  double f[rank];
+  for (i = 0; i < dim; i++){
+    f[i]     = y[i];
+    f[i+dim] = 1.0;
+  }
+  f[rank-1] = 0.0;
+  //  print_vector(stdout, f, rank, "      f:");
+  double r = INITIAL_R;
+
+  /* set Log_C*/
+  Log_C= (dim+1)*log(r);
+  /*
+    for (i = dim; i > 0; i -= 2) Log_C -= log(i);
+    if (dim % 2) {
+    Log_C += log(2.0) + 0.5*(dim-1)*log(2*M_PI);
+    } else {
+    Log_C += 0.5*dim*log(2*M_PI);
+    }
+  */
+  for (i = 0; i < dim; i++)    Log_C -= log(s[i]);
+  for (i = 0; i < dim; i++)    Log_C -= 0.5*mm[i]/ss[i];
+  for (i = dim; i > 0; i -= 2) Log_C -= log(i);
+  if (dim % 2) Log_C += 0.5 * (log(2.0) - log(M_PI));
+  //  printf("Log_C: %.10g\n", Log_C);
+  //  printf("    C: %.10g\n", exp(Log_C));
+
+  /* move r form 1e-6 to 1.0 */  
+  runge_kutta_1(f, INITIAL_R, 1.0);
+  r = 1.0;
+
+  //  fprintf(stdout, "r=%f, C=%g\n", r, exp(Log_C));
+  //  print_vector(stdout, f, rank, "f:\t");
+
+  for ( i = 0 ; i < rank-1; i++)
+    f[i] *= exp(-r*r*x[0]-r*y[0]);
+  f[0] /= r;
+  f[dim] /= r*r;
+  //print_vector(stdout, f, rank, "f:\t");
+
+  /* move r form 1.0 to r1 */
+  runge_kutta_2(f, 1.0, r1);
+  r = r1;
+
+  //fprintf(stdout, "r=%f\n", r);
+  //print_vector(stdout, f, rank, "f:\t");
+  //fprintf(stdout, "Probability= %10.6f\n", f[rank-1]);
+  fprintf(stdout, "p-1= %10.6g\n", f[rank-1]-1);
 
   return;
 }
@@ -552,7 +624,7 @@ hirotsu_1_1(void)
     m[i] = 0.0;
   }
 
-  ball_prob();
+  ball_prob2();
   return;
 }
 
@@ -573,7 +645,7 @@ hirotsu_1_2(void)
     m[i] = 0.01 * i;
   }
 
-  ball_prob();
+  ball_prob2();
   //fisher_bingham();
   return;
 }
@@ -595,7 +667,7 @@ hirotsu_2_1(void)
     m[i] = 0.0;
   }
 
-  ball_prob();
+  ball_prob2();
   return;
 }
 
@@ -616,7 +688,7 @@ hirotsu_2_2(void)
     m[i] = 0.01 * i;
   }
 
-  ball_prob();
+  ball_prob2();
   return;
 }
 
@@ -637,7 +709,7 @@ anderson_darling(void)
     m[i] = 0.0;
   }
 
-  ball_prob();
+  ball_prob2();
   return;
 }
 
