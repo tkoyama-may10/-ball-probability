@@ -85,8 +85,10 @@ In this note, we explain how to generate the low data in our paper
 
 \section{Preparation}
 For our numerical experiments, we prepared C program {\tt program.c}, 
-shell scripts {\tt tab1and2.sh}, {\tt tab3.sh},
-and {\tt R} scripts {\tt fig1.R}, {\tt fig2.R}, {\tt tab1and2.R}, {\tt tab3.R}.
+shell scripts 
+{\tt tab1and2.sh}, {\tt tab3.sh}, {\tt tab4.sh},
+and {\tt R} scripts 
+{\tt fig1.R}, {\tt fig2.R}, {\tt tab1and2.R}, {\tt tab3.R}.
 Our computer system is linux(debian), and we utilized GNU scientific library
 BLAS, and {\tt R}.
 The source file {\tt program.c} can be compiled by the following command:
@@ -100,11 +102,12 @@ In our numerical experiments, we generated the following files:
 {\tt fig1.txt}, {\tt fig1.eps},
 {\tt fig2.txt}, {\tt fig2-1.eps},{\tt fig2-2.eps},
 {\tt tab1and2.txt},{\tt tab1and2.tex},
-{\tt tab3.txt},{\tt tab3.tex},{\tt tab3.eps}.
+{\tt tab3.txt},{\tt tab3.tex},{\tt tab3.eps},
+{\tt tab4.tex}.
 
 \section{Synopsis}
 \begin{verbatim}
-./a.out S d r [t_1 t_2 ... l_1 l_2 ..]
+./a.out S d r [s_1 s_2 ... m_1 m_2 ..]
 \end{verbatim}
 \begin{itemize}
 \item \verb+S+\/: Switch the behavior of the program. Behaviors are
@@ -114,31 +117,27 @@ In our numerical experiments, we generated the following files:
     \item \verb+S=2+\ : %%    ball_prob_graph();
     Compute the ball probability by HGM and output data for drawing graphs.
     \item \verb+S=3+\ : %%    fisher_bingham();
-    Compute the Fisher--Bingham integral and it's differental by HGM
-    (old version).
+    Compute the Fisher--Bingham integral and it's differental by HGM.
     \item \verb+S=4+\ : %%    fisher_bingham_graph();
     Compute the Fisher--Bingham integral and it's differental by HGM
-    and output data for drawing graphs(old version).
-    \item \verb+S=5+\ : %%    hirotsu_1_1();
-    Generate data for Table 1 ($\mu=0$).
-    \item \verb+S=6+\ : %%    hirotsu_1_2();
-    Generate data for Table 1 ($\mu\neq 0$).
-    \item \verb+S=7+\ : %%    hirotsu_2_1();
-    Generate data for Table 2 ($\mu=0$).
-    \item \verb+S=8+\ : %%    hirotsu_2_2();
-    Generate data for Table 2 ($\mu\neq 0$).
-    \item \verb+S=9+\ : %%    anderson_darling();
-    Generate data for Table 3.
-    \item \verb+S=10+\ : %%    fisher_bingham2();
-    Compute the Fisher--Bingham integral and it's differental by HGM.
-    \item \verb+S=11+\ : %%    fisher_bingham_graph2();
-    Compute the Fisher--Bingham integral and it's differental by HGM
     and output data for drawing graphs.
+    \item \verb+S=5+\ : %%    hirotsu_1_1();
+    Generate data for Table 1 ($\Sigma^{(1)},\,\mu=0$).
+    \item \verb+S=6+\ : %%    hirotsu_1_2();
+    Generate data for Table 1 ($\Sigma^{(1)},\,\mu\neq 0$).
+    \item \verb+S=7+\ : %%    hirotsu_2_1();
+    Generate data for Table 1 ($\Sigma^{(2)},\,\mu=0$).
+    \item \verb+S=8+\ : %%    hirotsu_2_2();
+    Generate data for Table 1 ($\Sigma^{(2)},\,\mu\neq 0$).
+    \item \verb+S=9+\ : %%    anderson_darling();
+    Generate data for Table 2.
+    \item \verb+S=10+\ : %%    comparison();
+    Generate data for Table 3.
   \end{itemize}
 \item \verb+d+\/: Dimension.
 \item \verb+r+\/: Radiaus of the ball or sphere.
-\item \verb+t_1,...+\/: Parameters $\tau_i$.
-\item \verb+l_1,...+\/: Parameters $\lambda_i$.
+\item \verb+s_1,...+\/: Parameters $\sigma_i$.
+\item \verb+m_1,...+\/: Parameters $\mu_i$.
 \end{itemize}
 
 
@@ -149,8 +148,7 @@ The following command generates the low data {\tt fig1.txt}
 and eps file {\tt fig1.eps} for figure 1:
 \begin{lstlisting}[style=BashInputStyle]
 
-./a.out 2 3 20.0 3.0 2.0 1.0 1.0 0.5 0.25 > fig1.txt
-R -f fig1.R
+./a.out 2 3 20.0 3.0 2.0 1.0 1.0 0.5 0.25 > fig1.txt && R -f fig1.R
 \end{lstlisting}
 
 \medskip\noindent{\bf Figure 2}\/.
@@ -158,18 +156,20 @@ The following command generates the low data {\tt fig2.txt}
 and eps files {\tt fig2-1.eps} and {\tt fig2-2.eps} for figure 2:
 \begin{lstlisting}[style=BashInputStyle]
 
-./a.out 11 3 20.0 3.0 2.0 1.0 1.0 0.5 0.25 > fig2.txt
-R -f fig2.R
+./a.out 4 3 20.0 3.0 2.0 1.0 1.0 0.5 0.25 > fig2.txt && R -f fig2.R
 \end{lstlisting}
 
-\medskip\noindent{\bf Table 1 and Table 2}\/.
+\medskip\noindent{\bf Table 1}\/.
 Run the shell script {\tt tab1and2.sh}, then the low data {\tt tab1and2.txt} and 
-the \TeX file {\tt tab1and2.tex} are generated.
+the \TeX file {\tt tab1and2.tex} will be generated.
 
-\medskip\noindent{\bf Table 3 and its figure}\/.
+\medskip\noindent{\bf Table 2 and its figure}\/.
 Run the shell script {\tt tab3.sh}, then the low data {\tt tab3.txt}, 
-the TeX source {\tt tab3.tex}, and the eps file {\tt tab3.eps} are generated.
+the TeX source {\tt tab3.tex}, and the eps file {\tt tab3.eps} will be generated.
 
+\medskip\noindent{\bf Table 3}\/.
+Run the shell script {\tt tab4.sh}, then the TeX source {\tt tab3.tex} will be
+generated.
 
 %\iffalse
 \iftrue
