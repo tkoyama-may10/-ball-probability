@@ -26,6 +26,7 @@ static void anderson_darling(void);
 static double gamma_function1(int);
 static double gamma_function2(int);
 static void comparison(void);
+static void feller(void);
 
 static int function_1(double r, const double f[],  double df[], void *prms);
 static int function_2(double r, const double f[],  double df[], void *prms);
@@ -949,6 +950,97 @@ comparison(void)
   return;
 }
 
+void 
+feller(void)
+{
+  int dim2 = dim;
+  dim *= 2;
+  //printf("dim=%d\n", dim);
+
+  double sigma_mu[6*dim];
+  s  = sigma_mu;
+  m  = sigma_mu +   dim;
+  ss = sigma_mu + 2*dim;
+  mm = sigma_mu + 3*dim;
+  x  = sigma_mu + 4*dim;
+  y  = sigma_mu + 5*dim;
+
+  int i;
+  for (i=0; i<dim2; i++){
+    s[2*i]   = s[2*i+1] = sqrt( 0.5/(i+1.0) );
+  }
+  for (i=0; i<dim; i++){
+    m[i] = 0.0;
+  }
+
+  /* Set parameters */
+  rank = 2 * dim + 1;
+  for ( i = 0; i < dim; i++){
+    ss[i] = s[i] * s[i];
+    mm[i] = m[i] * m[i];
+    x[i] = -0.5 / (s[i]*s[i]);
+    y[i] = m[i] / (s[i]*s[i]);    
+  }
+  /*
+    print_vector(stdout, s, dim, "  sigma:");
+    print_vector(stdout, m, dim, "     mu:");
+    print_vector(stdout, x, dim, "      x:");
+    print_vector(stdout, y, dim, "      y:");
+  */
+
+  /* initial value */
+  double f[rank];
+  for (i = 0; i < dim; i++){
+    f[i]     = y[i];
+    f[i+dim] = 1.0;
+  }
+  f[rank-1] = 0.0;
+  //  print_vector(stdout, f, rank, "      f:");
+  double r = INITIAL_R;
+
+  /* set Log_C*/
+  Log_C= (dim+1)*log(r);
+  for (i = 0; i < dim; i++)    Log_C -= log(s[i]);
+  for (i = 0; i < dim; i++)    Log_C -= 0.5*mm[i]/ss[i];
+  for (i = dim; i > 0; i -= 2) Log_C -= log(i);
+  if (dim % 2) Log_C += 0.5 * (log(2.0) - log(M_PI));
+  //  printf("Log_C: %.10g\n", Log_C);
+  //  printf("    C: %.10g\n", exp(Log_C));
+
+  if (radius < 1.0) {
+    /* move r form 1e-6 to radius */  
+    runge_kutta_1(f, INITIAL_R, radius);
+    print_vector(stdout, f, rank, "f:\t");
+    r = radius;
+  } else {
+    /* move r form 1e-6 to 1.0 */  
+    runge_kutta_1(f, INITIAL_R, 1.0);
+    r = 1.0;
+    
+    //  fprintf(stdout, "r=%f, C=%g\n", r, exp(Log_C));
+    //  print_vector(stdout, f, rank, "f:\t");
+    
+    for ( i = 0 ; i < rank-1; i++)
+      f[i] *= exp(-r*r*x[0]-r*y[0]);
+    f[0] /= r;
+    f[dim] /= r*r;
+    //print_vector(stdout, f, rank, "f:\t");
+
+    /* move r form 1.0 to radius */
+    runge_kutta_2(f, 1.0, radius);
+    r = radius;
+  }
+
+  //fprintf(stdout, "r=%f\n", r);
+  //print_vector(stdout, f, rank, "f:\t");
+
+  double fb1=f[rank-1];
+  double fb2=pow(1.0-exp(-r*r), dim2);
+
+  fprintf(stdout, "%2d & %f & %4.2e\\\\\n", dim, fb1, fb1-fb2 );
+  return;
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -1004,6 +1096,9 @@ main(int argc, char *argv[])
     break;
   case 10:
     comparison();
+    break;
+  case 11:
+    feller();
     break;
   default:
     break;

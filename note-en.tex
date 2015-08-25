@@ -68,7 +68,7 @@
 
 \title{A Note for Numerical Experiments}
 \author{Tamio Koyama}
-\date{August 20, 2015}
+\date{August, 2015}
 
 \begin{document}
 \maketitle
@@ -86,7 +86,7 @@ In this note, we explain how to generate the low data in our paper
 \section{Preparation}
 For our numerical experiments, we prepared C program {\tt program.c}, 
 shell scripts 
-{\tt tab1and2.sh}, {\tt tab3.sh}, {\tt tab4.sh},
+{\tt tab1and2.sh}, {\tt tab3.sh}, {\tt tab4.sh}, {\tt tab5.sh},
 and {\tt R} scripts 
 {\tt fig1.R}, {\tt fig2.R}, {\tt tab1and2.R}, {\tt tab3.R}.
 Our computer system is linux(debian), and we utilized GNU scientific library
@@ -100,10 +100,10 @@ gcc program.c -lm -lgsl -lblas -O0 -Wall
  
 In our numerical experiments, we generated the following files:
 {\tt fig1.txt}, {\tt fig1.eps},
-{\tt fig2.txt}, {\tt fig2-1.eps},{\tt fig2-2.eps},
-{\tt tab1and2.txt},{\tt tab1and2.tex},
-{\tt tab3.txt},{\tt tab3.tex},{\tt tab3.eps},
-{\tt tab4.tex}.
+{\tt fig2.txt}, {\tt fig2-1.eps}, {\tt fig2-2.eps},
+{\tt tab1and2.txt}, {\tt tab1and2.tex},
+{\tt tab3.txt}, {\tt tab3.tex}, {\tt tab3.eps},
+{\tt tab4.tex}, {\tt tab5.tex}.
 
 \section{Synopsis}
 \begin{verbatim}
@@ -133,6 +133,8 @@ In our numerical experiments, we generated the following files:
     Generate data for Table 2.
     \item \verb+S=10+\ : %%    comparison();
     Generate data for Table 3.
+    \item \verb+S=11+\ : %%    feller();
+    Generate data for Table 4.
   \end{itemize}
 \item \verb+d+\/: Dimension.
 \item \verb+r+\/: Radiaus of the ball or sphere.
@@ -169,6 +171,10 @@ the TeX source {\tt tab3.tex}, and the eps file {\tt tab3.eps} will be generated
 
 \medskip\noindent{\bf Table 3}\/.
 Run the shell script {\tt tab4.sh}, then the TeX source {\tt tab3.tex} will be
+generated.
+
+\medskip\noindent{\bf Table 4}\/.
+Run the shell script {\tt tab5.sh}, then the TeX source {\tt tab5.tex} will be
 generated.
 
 %\iffalse
