@@ -3,7 +3,7 @@
 echo \\begin{table}[htbp]          > tab5.tex
 echo \\begin{center}               >>tab5.tex
 echo \\begin{tabular}{ccc}         >>tab5.tex
-echo dim \& hgm \& hgm - exact\\\\ >>tab5.tex
+echo dim \& hgm \& exact-hgm\\\\ >>tab5.tex
 echo \\hline                       >>tab5.tex
 
 ./a.out 11  3 1.0 >> tab5.tex

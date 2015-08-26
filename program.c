@@ -175,7 +175,7 @@ ball_prob2(void)
   //print_vector(stdout, f, rank, "f:\t");
 
   //fprintf(stdout, "Probability= %10.6f\n", f[rank-1]);
-  fprintf(stdout, "p-1= %4.2e\n", f[rank-1]-1);
+  fprintf(stdout, "1-p= %4.2e\n", 1-f[rank-1]);
 
   return;
 }
@@ -945,7 +945,7 @@ comparison(void)
   else 
     gamma = gamma_function2(dim);
   double fb2 = 2 * pow(M_PI, 0.5*dim) * pow(r,dim-1) * exp(-0.5*r*r) / gamma;
-  fprintf(stdout, "%2d & %f & %4.2e\\\\\n", dim, fb, fb-fb2 );
+  fprintf(stdout, "%2d & %f & %4.2e\\\\\n", dim, fb, fb2-fb );
 
   return;
 }
@@ -1037,7 +1037,7 @@ feller(void)
   double fb1=f[rank-1];
   double fb2=pow(1.0-exp(-r*r), dim2);
 
-  fprintf(stdout, "%2d & %f & %4.2e\\\\\n", dim, fb1, fb1-fb2 );
+  fprintf(stdout, "%2d & %f & %4.2e\\\\\n", dim, fb1, fb2-fb1 );
   return;
 }
 

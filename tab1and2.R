@@ -13,7 +13,7 @@ cat("\\hline\n")
 cat("\\multirow{2}{*}{dim}&\n")
 cat("\\multicolumn{2}{c}{$\\mu=\\mu^{(1)}=0$}&\n")
 cat("\\multicolumn{2}{c}{$\\mu=\\mu^{(2)}\\neq 0$}\\\\\n")
-cat("& $p$ & time(s) & $p$ & time(s)  \\\\\n")
+cat("& $1-p$ & time(s) & $1-p$ & time(s)  \\\\\n")
 cat("\\hline\n")
  for(i in c(1:11)){cat(sprintf("%d & %s & %s & %s & %s \\\\",t1[i,1],t1[i,2],t1[i,3],t1[i,4],t1[i,5]), "\n")}
 cat("\\hline\n")
@@ -32,7 +32,7 @@ cat("\\hline\n")
 cat("\\multirow{2}{*}{dim}&\n")
 cat("\\multicolumn{2}{c}{$\\mu=\\mu^{(1)}=0$}&\n")
 cat("\\multicolumn{2}{c}{$\\mu=\\mu^{(2)}\\neq 0$}\\\\\n")
-cat("& $p$ & time(s) & $p$ & time(s)  \\\\\n")
+cat("& $1-p$ & time(s) & $1-p$ & time(s)  \\\\\n")
 cat("\\hline\n")
 
 

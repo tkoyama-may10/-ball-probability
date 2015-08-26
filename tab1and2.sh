@@ -36,6 +36,6 @@ do
     cat tmp2 >> tab1and2.txt
 done
 
-cat tab1and2.txt | grep p-1 > tmp
+cat tab1and2.txt | grep 1-p > tmp
 cat tab1and2.txt | grep User > tmp2
 R -f tab1and2.R
