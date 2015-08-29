@@ -109,6 +109,22 @@ In our numerical experiments, we generated the following files:
 \begin{verbatim}
 ./a.out S d r [s_1 s_2 ... m_1 m_2 ..]
 \end{verbatim}
+Our program mainly computes 
+the ball probability
+$$
+\int_{x_1^2+\cdots x_d^2\leq r^2} \frac{1}{(2\pi)^{d/2}|\Sigma|}
+\exp\left(-\frac{1}{2}(\mathbf x-\mu^\top\Sigma^{-1}(\mathbf x-\mu)\right)
+d\mathbf x
+$$
+and the Fisher--Bingham integral
+$$
+\int_{\mathbf x\in S^{d-1}} \frac{1}{(2\pi)^{d/2}|\Sigma|}
+\exp\left(-\frac{1}{2}(\mathbf x-\mu^\top\Sigma^{-1}(\mathbf x-\mu)\right)
+|d\mathbf x|
+$$
+where $\Sigma=\mathrm{diag}(\sigma_1^2,\dots,\sigma_d^2)$,
+$\mu=(\mu_1,\dots,\mu_d)^\top$ and 
+$|d\mathbf x|$ is the volume element of $S^{d-1}(r)$.
 \begin{itemize}
 \item \verb+S+\/: Switch the behavior of the program. Behaviors are
   \begin{itemize}
